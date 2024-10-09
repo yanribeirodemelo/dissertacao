@@ -21,37 +21,36 @@ def main():
     #inserindo na coluna 2
     col2.image(foto, use_column_width=True)
     
-    st.title('Quasi-periodic opportunistic replacement policy')
+    st.title('Modelo de Manutenção para Sistemas de Difícil Acesso')
 
-    menu = ["Application", "Information", "Website"]
+    menu = ["Aplicação", "Informações", "Grupo de Pesquisa"]
     
-    choice = st.sidebar.selectbox("Select here", menu)
+    choice = st.sidebar.selectbox("Selecione aqui", menu)
     
     if choice == menu[0]:
         
         st.header(menu[0])
 
-        st.subheader("Insert the parameter values below:")
+        st.subheader("Insira os valores dos parâmetros de entrada abaixo:")
+
+        n2 = st.number_input("Insira o parâmetro de escala - {}".format(chr(945)), min_value = 0.0, value = 10.0) # escala fraca
+        b2 = st.number_input("Insira o parâmetro de forma - {}".format(chr(946)), min_value = 1.0, max_value = 6.0, value = 3.0) # forma fraca
+
+        cp = st.number_input("Insira o parâmetro de custo de substituição preventiva", min_value = 0.0, value = 1.0) # custo da preventiva
+        cd = st.number_input("Insira o parâmetro de custo de tempo de inatividade por unidade de tempo", min_value = 0.0, value = 0.5) # custo de downtime por unidade de tempo
+        cm = st.number_input("Insira o parâmetro de custo adicional para ação de manutenção garantida", min_value = 0.0, value = 1.00) # custo de inspeção
+        cf = st.number_input("Insira o parâmetro de custo de substituição corretiva", min_value = 0.0, value = 1.0) # custo de falha
         
-        n2=st.number_input("Insert the characteristic life parameter of component - {}" .format(chr(945)), min_value = 0.0, value = 10.0) #escala fraca
-        b2=st.number_input("Insert the weibull shape parameter of component - {}" .format(chr(946)), min_value = 1.0, max_value = 6.0, value = 3.0) #forma fraca
+        q = st.number_input("Insira o parâmetro de probabilidade de oportunidade em uma visita", min_value = 0.0, max_value = 1.0, value = 0.2) # taxa de chegada de oportunidades
+        s = st.number_input("Insira o parâmetro de intervalo de tempo entre visitas", min_value = 0.0, value = 1.0) # intervalo entre visitas
         
-        cp=st.number_input("Insert the cost of preventive replacement parameter", min_value = 0.0, value = 1.0) #custo da preventiva
-        cd=st.number_input("Insert the cost of downtime per unit of time parameter", min_value = 0.0, value = 0.5) #custo de downtime por unidade de tempo
-        cm=st.number_input("Insert the aditional (unit) cost for replacement at preventive age", min_value = 0.0, value = 1.00) #custo de inspeção
-        cf=st.number_input("Insert the cost of corrective replacement parameter", min_value = 0.0, value = 1.0) #custo de falha
+        st.subheader("Insira os valores das variáveis de decisão abaixo:")
         
-        q=st.number_input("Insert the proability of opportunity", min_value = 0.0, max_value = 1.0, value = 0.2) #taxa de chegada de oportunidades
-        s=st.number_input("Insert the scheduled time between visits parameter", min_value = 0.0, value = 1.0) #intervalo entre visitas
+        W = int(st.number_input("Insira o limite inferior das ações de manutenção preventivas por oportunidades", min_value = 0, max_value = 50, step = 1, value = 6)) # Limite inferior da janela de oportunidades
+        M = int(st.number_input("Insira a idade de ação de manutenção garantida", min_value = 0, max_value = 50, step = 1, value = 14)) # Limite inferior da janela de oportunidades
         
-        st.subheader("Insert the decision variable values below:")
-        
-        W=int(st.number_input("Insert the initial threshold of opportunities variable", min_value = 0, max_value = 50, step = 1, value = 6)) #Limite inferior da janela de oportunidades
-        M=int(st.number_input("Insert the total number of visits variable", min_value = 0, max_value = 50, step = 1, value = 14)) #Limite inferior da janela de oportunidades
-        
-        st.subheader("Click on botton below to run this application:")
-        
-        botao = st.button("Get cost-rate")
+        st.subheader("Clique no botão abaixo para executar esta aplicação:")
+        botao = st.button("Executar")
 
         if botao:
         
@@ -203,7 +202,8 @@ def main():
               d4 = d4 + fd4  
             
               #%%RESULTADOS
-            
+
+                
               pe = p11+p12+p2+p31+p32+p4 #probabilidade total
               ce = c11+c12+c2+c31+c32+c4 #custo total
               ve = t11+t12+t2+t31+t32+t4 #tamanho total
@@ -211,8 +211,7 @@ def main():
               
               tx = ce/ve #taxa de custo
               dx = de/ve #taxa de downtime
-              
-              mu = ve/(p11+p12+p31+p32)
+              mu = ve/(p11+p12+p31+p32) #mtbof
             
               if pe < 0.999 or pe > 1.001:
                 print("Algum erro ocorreu!")
@@ -220,26 +219,26 @@ def main():
               return tx, ce, ve, pe, dx, mu
 
             taxadecusto = otm()
-            st.write("Cost-rate result: {}" .format(taxadecusto[0]))
-            st.write("Downtime-rate result: {}" .format(taxadecusto[4]))
+            st.write("Resultado de taxa de custo: {}" .format(taxadecusto[0]))
+            st.write("Resultado de tempo de indisponibilidade médio: {}" .format(taxadecusto[4]))
+            st.write("Resultado de tempo médio entre falhas operacionais: {}" .format(taxadecusto[5]))
 
     if choice == menu[1]:
         
         st.header(menu[1])
-        
-        st.write('''This prototype was created by members of the RANDOM research group, which aims to assist in the application of a quasi-periodic opportunistic replacement policy.''')
-        st.write('''This prototype has restrictions regarding the solution search space. If it is in the user's interest to use a wider range of solution combinations or if there is any question about the study and/or this prototype can be directed to any of the email addresses below. Also, this application is still in the development stage. Finally, if this application is used for any purpose, all authors should be informed.''')
+
+        st.write('''Este protótipo foi criado por membros do grupo de pesquisa RANDOM, que tem como objetivo auxiliar na aplicação de uma política de manutenção periódica para sistemas de difícil acesso''')
+        st.write('''Este protótipo possui restrições quanto ao espaço de busca de soluções. Se for do interesse do usuário utilizar uma gama maior de combinações de soluções ou se houver alguma dúvida sobre o estudo e/ou este protótipo, elas podem ser direcionadas para qualquer um dos endereços de e-mail abaixo. Por fim, se esta aplicação for utilizada para qualquer propósito, todos os autores devem ser informados.''')
         st.write('''y.r.melo@random.org.br''')
-        st.write('''a.j.s.rodrigues@random.org.br''')
         st.write('''c.a.v.cavalcante@random.org.br''')
-        
+
     if choice == menu[2]:
         
         st.header(menu[2])
         
-        st.write("The Research Group on Risk and Decision Analysis in Operations and Maintenance was created in 2012 in order to bring together different researchers who work in the following areas: risk, maintenance and operation modelling. Learn more about it through our website.")
-        st.markdown('[Click here to be redirected to our website](https://random.org.br)',False)
-
+        st.write("O Grupo de Pesquisa em Análise de Risco e Decisão em Operações e Manutenção foi criado em 2012 com o objetivo de reunir diferentes pesquisadores que atuam nas seguintes áreas: risco, modelagem de manutenção e operação. Saiba mais sobre o grupo através do nosso site.")
+        st.markdown('[Clique aqui para ser redirecionado ao nosso site](https://sites.ufpe.br/random/#page-top)', False)
+        
 if st._is_running_with_streamlit:
     main()
 else:
