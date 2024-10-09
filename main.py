@@ -236,7 +236,7 @@ def main():
         
         st.header(menu[2])
         
-        st.write("O Grupo de Pesquisa em Análise de Risco e Decisão em Operações e Manutenção foi criado em 2012 com o objetivo de reunir diferentes pesquisadores que atuam nas seguintes áreas: risco, modelagem de manutenção e operação. Saiba mais sobre o grupo através do nosso site.")
+        st.write("O Grupo de Pesquisa em Risco e Análise da Decisão em Operações e Manutenção foi criado em 2012 com o objetivo de reunir diferentes pesquisadores que atuam nas seguintes áreas: risco, modelagem de manutenção e operação. Saiba mais sobre o grupo através do nosso site.")
         st.markdown('[Clique aqui para ser redirecionado ao nosso site](https://sites.ufpe.br/random/#page-top)', False)
         
 if st._is_running_with_streamlit:
