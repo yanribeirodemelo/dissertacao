@@ -3,3 +3,4 @@ scipy>=1.10.0
 streamlit==1.5.0
 click==8.0
 setuptools>=58.0.0  # Adicione esta linha
+protobuf==3.20.*
