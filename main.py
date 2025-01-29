@@ -12,7 +12,7 @@ from scipy.integrate import quad
 from PIL import Image
 
 st.set_page_config(
-    page_title="Modelos com Dados em Painel",
+    page_title="Política de Manutenção",
     page_icon="foto2.png",
     layout="wide"
 )
