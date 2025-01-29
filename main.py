@@ -11,6 +11,12 @@ from streamlit import cli as stcli
 from scipy.integrate import quad
 from PIL import Image
 
+st.set_page_config(
+    page_title="Modelos com Dados em Painel",
+    page_icon="foto2.png",
+    layout="wide"
+)
+
 # import streamlit.report_thread as ReportThread
 # st.report_thread.add_report_ctx(thread)
 
