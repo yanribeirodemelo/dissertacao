@@ -471,10 +471,16 @@ def main():
                             maiorconfiabilidade = resultado[5]
             
             status_text.text("Execução concluída")
-            st.write("A política de manutenção ótima é a política [{},{}]" .format(Wotm, Motm))
-            st.write("Resultado de taxa de custo: {}" .format(menortaxa))
-            st.write("Resultado de tempo de indisponibilidade médio: {}" .format(menorinatividade))
-            st.write("Resultado de tempo médio entre falhas operacionais: {}" .format(maiorconfiabilidade))
+            
+            col1, col2, col3 = st.columns(3)
+            col1.subheader("Política de manutenção")
+            col2.subheader("{}" .format(W))
+            col3.subheader("{}" .format(M))
+            
+            col1, col2, col3 = st.columns(3)
+            col1.subheader("Resultado de taxa de custo: {}" .format(menortaxa))
+            col2.subheader("Resultado de tempo de indisponibilidade médio: {}" .format(menorinatividade))
+            col3.subheader("Resultado de tempo médio entre falhas operacionais: {}" .format(maiorconfiabilidade))
             
             st.write('''Este protótipo possui restrições quanto ao espaço de busca de soluções, com W,M ∈ {1,...,50}. Se for do interesse do usuário utilizar uma gama maior de combinações de soluções ou se houver alguma dúvida sobre o estudo e/ou este protótipo, elas podem ser direcionadas para qualquer um dos endereços de e-mail abaixo. Por fim, se esta aplicação for utilizada para qualquer propósito, todos os autores devem ser informados.''')
             st.write('''y.r.melo@random.org.br''')
