@@ -248,8 +248,7 @@ def main():
 
         opcoes = ["Taxa de custo", "Taxa de indisponibilidade", "Confiabilidade operacional"]
         
-        st.subheader("Defina a medida de desempenho você deseja otimizar")
-        st.selectbox(opcoes)
+        escolha = st.selectbox("Defina a medida de desempenho você deseja otimizar", opcoes)
         
         st.subheader("Clique no botão abaixo para executar esta aplicação:")
         botao = st.button("Executar")
