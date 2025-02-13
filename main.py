@@ -247,7 +247,9 @@ def main():
         s = st.number_input("Insira o parâmetro de intervalo de tempo entre visitas", min_value = 0.0, value = 1.0) # intervalo entre visitas
 
         opcoes = ["Taxa de custo", "Taxa de indisponibilidade", "Confiabilidade operacional"]
-        st.subheader(st.selectbox("Qual medida de desempenho você deseja otimizar?", opcoes))
+        
+        st.subheader("Defina a medida de desempenho você deseja otimizar")
+        st.selectbox(opcoes)
         
         st.subheader("Clique no botão abaixo para executar esta aplicação:")
         botao = st.button("Executar")
