@@ -227,8 +227,8 @@ def main():
             taxadecusto = otm()
             col1, col2, col3 = st.columns(3)
             col1.subheader("Política de manutenção")
-            col2.subheader("W*={}" .format(W))
-            col3.subheader("M*={}" .format(M))
+            col2.subheader("W={}" .format(W))
+            col3.subheader("M={}" .format(M))
             
             col1, col2, col3 = st.columns(3)
             col1.subheader("Taxa de custo")
