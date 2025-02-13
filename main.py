@@ -439,7 +439,7 @@ def main():
                             menortaxa = resultado[0]
                             menorinatividade = resultado[4]
                             maiorconfiabilidade = resultado[5]
-            if escolha == "Taxa de inatividade":
+            if escolha == "Taxa de indisponibilidade":
                 menorinatividade = 10000000000
                 for W in range(1, 50+1):
                     for M in range(W, 50+1):
