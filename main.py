@@ -419,23 +419,64 @@ def main():
             
               return tx, ce, ve, pe, dx, mu
 
-            menortaxa = 10000000000
-            for W in range(1, 50+1):
-                for M in range(W, 50+1):
-                    resultado = otm()
-                    if resultado[0] < menortaxa:
-                        Wotm = W
-                        Motm = M
-                        menortaxa = resultado[0]
-                        indisponibilidade = resultado[4]
-                        confiabilidade = resultado[5]
-
-            st.write("A política de manutenção ótima é a política [{},{}]" .format(Wotm, Motm))
-            st.write("Resultado de taxa de custo: {}" .format(taxadecusto[0]))
-            st.write("Resultado de tempo de indisponibilidade médio: {}" .format(taxadecusto[4]))
-            st.write("Resultado de tempo médio entre falhas operacionais: {}" .format(taxadecusto[5]))
+            progress_bar = st.progress(0)
+            status_text = st.empty()
+            total_iteracoes = 1275
+            contador = 0
             
-            st.write('''Este protótipo possui restrições quanto ao espaço de busca de soluções ≤. Se for do interesse do usuário utilizar uma gama maior de combinações de soluções ou se houver alguma dúvida sobre o estudo e/ou este protótipo, elas podem ser direcionadas para qualquer um dos endereços de e-mail abaixo. Por fim, se esta aplicação for utilizada para qualquer propósito, todos os autores devem ser informados.''')
+            if escolha == "Taxa de custo":
+                menortaxa = 10000000000
+                for W in range(1, 50+1):
+                    for M in range(W, 50+1):
+                        resultado = otm()
+                        contador += 1
+                        progresso_atual = int((contador / total_iteracoes) * 100)
+                        progress_bar.progress(progresso_atual)
+                        status_text.text(f"Processando: W={W}, M={M} ({progresso_atual}%)")
+                        if resultado[0] < menortaxa:
+                            Wotm = W
+                            Motm = M
+                            menortaxa = resultado[0]
+                            menorinatividade = resultado[4]
+                            maiorconfiabilidade = resultado[5]
+            if escolha == "Taxa de inatividade":
+                menorinatividade = 10000000000
+                for W in range(1, 50+1):
+                    for M in range(W, 50+1):
+                        resultado = otm()
+                        contador += 1
+                        progresso_atual = int((contador / total_iteracoes) * 100)
+                        progress_bar.progress(progresso_atual)
+                        status_text.text(f"Processando: W={W}, M={M} ({progresso_atual}%)")
+                        if resultado[4] < menorinatividade:
+                            Wotm = W
+                            Motm = M
+                            menortaxa = resultado[0]
+                            menorinatividade = resultado[4]
+                            maiorconfiabilidade = resultado[5]
+            if escolha == "Confiabilidade operacional":
+                maiorconfiabilidade = 0
+                for W in range(1, 51):
+                    for M in range(W, 51):
+                        resultado = otm()
+                        contador += 1
+                        progresso_atual = int((contador / total_iteracoes) * 100)
+                        progress_bar.progress(progresso_atual)
+                        status_text.text(f"Processando: W={W}, M={M} ({progresso_atual}%)")
+                        if resultado[5] > maiorconfiabilidade:
+                            Wotm = W
+                            Motm = M
+                            menortaxa = resultado[0]
+                            menorinatividade = resultado[4]
+                            maiorconfiabilidade = resultado[5]
+            
+            status_text.text("Execução concluída")
+            st.write("A política de manutenção ótima é a política [{},{}]" .format(Wotm, Motm))
+            st.write("Resultado de taxa de custo: {}" .format(menortaxa))
+            st.write("Resultado de tempo de indisponibilidade médio: {}" .format(menorinatividade))
+            st.write("Resultado de tempo médio entre falhas operacionais: {}" .format(maiorconfiabilidade))
+            
+            st.write('''Este protótipo possui restrições quanto ao espaço de busca de soluções, com W,M ∈ {1,...,50}. Se for do interesse do usuário utilizar uma gama maior de combinações de soluções ou se houver alguma dúvida sobre o estudo e/ou este protótipo, elas podem ser direcionadas para qualquer um dos endereços de e-mail abaixo. Por fim, se esta aplicação for utilizada para qualquer propósito, todos os autores devem ser informados.''')
             st.write('''y.r.melo@random.org.br''')
             st.write('''c.a.v.cavalcante@random.org.br''')
     
