@@ -447,9 +447,9 @@ def main():
         st.write('''y.r.melo@random.org.br''')
         st.write('''c.a.v.cavalcante@random.org.br''')
 
-    if choice == menu[4]:
+    if choice == menu[3]:
         
-        st.header(menu[4])
+        st.header(menu[3])
         
         st.write("O Grupo de Pesquisa em Risco e Análise da Decisão em Operações e Manutenção foi criado em 2012 com o objetivo de reunir diferentes pesquisadores que atuam nas seguintes áreas: risco, modelagem de manutenção e operação. Saiba mais sobre o grupo através do nosso site.")
         st.markdown('[Clique aqui para ser redirecionado ao nosso site](https://sites.ufpe.br/random/#page-top)', False)
