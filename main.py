@@ -429,7 +429,7 @@ def main():
                         indisponibilidade = resultado[4]
                         confiabilidade = resultado[5]
 
-            st.write("A política de manutenção ótima é a política [{},{}]
+            st.write("A política de manutenção ótima é a política [{},{}]" .format(Wotm, Motm)
             st.write("Resultado de taxa de custo: {}" .format(taxadecusto[0]))
             st.write("Resultado de tempo de indisponibilidade médio: {}" .format(taxadecusto[4]))
             st.write("Resultado de tempo médio entre falhas operacionais: {}" .format(taxadecusto[5]))
