@@ -225,10 +225,21 @@ def main():
               return tx, ce, ve, pe, dx, mu
 
             taxadecusto = otm()
-            st.write("Resultado de taxa de custo: {}" .format(taxadecusto[0]))
-            st.write("Resultado de tempo de indisponibilidade médio: {}" .format(taxadecusto[4]))
-            st.write("Resultado de tempo médio entre falhas operacionais: {}" .format(taxadecusto[5]))
-    
+            col1, col2, col3 = st.columns(3)
+            col1.subheader("Política de manutenção")
+            col2.subheader("W*={}" .format(Wotm))
+            col3.subheader("M*={}" .format(Motm))
+            
+            col1, col2, col3 = st.columns(3)
+            col1.subheader("Taxa de custo")
+            col2.subheader("Taxa de indisponibilidade")
+            col3.subheader("Confiabilidade operacional")
+
+            col1, col2, col3 = st.columns(3)
+            col1.subheader(taxadecusto[0])
+            col2.subheader(taxadecusto[4])
+            col3.subheader(taxadecusto[5])
+
     if choice == menu[1]:
         
         st.header(menu[1])
