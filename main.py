@@ -284,7 +284,7 @@ def main():
                     f"""
                     <div class="column-box">
                         <h3>Taxa de custo</h3>
-                        <h2>{taxadecusto[0]}</h2>
+                        <h2>{round(taxadecusto[0], 3)}</h2>
                     </div>
                     """,
                     unsafe_allow_html=True,
@@ -295,7 +295,7 @@ def main():
                     f"""
                     <div class="column-box">
                         <h3>Taxa de indisponibilidade</h3>
-                        <h2>{taxadecusto[4]}</h2>
+                        <h2>{round(taxadecusto[4], 3)}</h2>
                     </div>
                     """,
                     unsafe_allow_html=True,
@@ -306,26 +306,25 @@ def main():
                     f"""
                     <div class="column-box">
                         <h3>Confiabilidade operacional</h3>
-                        <h2>{taxadecusto[5]}</h2>
+                        <h2>{round(taxadecusto[5], 3)}</h2>
                     </div>
                     """,
                     unsafe_allow_html=True,
                 )
 
-            
             #col1, col2, col3 = st.columns(3)
             #col1.subheader("Política de manutenção")
             #col2.subheader("W={}" .format(W))
             #col3.subheader("M={}" .format(M))
             
-            col1, col2, col3 = st.columns(3)
-            col1.subheader("Taxa de custo")
-            col2.subheader("Taxa de indisponibilidade")
-            col3.subheader("Confiabilidade operacional")
+            #col1, col2, col3 = st.columns(3)
+            #col1.subheader("Taxa de custo")
+            #col2.subheader("Taxa de indisponibilidade")
+            #col3.subheader("Confiabilidade operacional")
 
-            col1.subheader(taxadecusto[0])
-            col2.subheader(taxadecusto[4])
-            col3.subheader(taxadecusto[5])
+            #col1.subheader(taxadecusto[0])
+            #col2.subheader(taxadecusto[4])
+            #col3.subheader(taxadecusto[5])
 
     if choice == menu[1]:
         
