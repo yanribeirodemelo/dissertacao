@@ -251,24 +251,23 @@ def main():
                 f"""
                 <div class="box-container">
                     <div class="box-item"><h3>Política de manutenção</h3></div>
-                    <div class="box-item"><h3>W* = {W}</h3></div>
-                    <div class="box-item"><h3>M* = {M}</h3></div>
+                    <div class="box-item"><h3>W = {W}</h3></div>
+                    <div class="box-item"><h3>M = {M}</h3></div>
                 </div>
                 """,
                 unsafe_allow_html=True,
             )
             
-            col1, col2, col3 = st.columns(3)
-            col1.subheader("Política de manutenção")
-            col2.subheader("W={}" .format(W))
-            col3.subheader("M={}" .format(M))
+            #col1, col2, col3 = st.columns(3)
+            #col1.subheader("Política de manutenção")
+            #col2.subheader("W={}" .format(W))
+            #col3.subheader("M={}" .format(M))
             
             col1, col2, col3 = st.columns(3)
             col1.subheader("Taxa de custo")
             col2.subheader("Taxa de indisponibilidade")
             col3.subheader("Confiabilidade operacional")
 
-            col1, col2, col3 = st.columns(3)
             col1.subheader(taxadecusto[0])
             col2.subheader(taxadecusto[4])
             col3.subheader(taxadecusto[5])
