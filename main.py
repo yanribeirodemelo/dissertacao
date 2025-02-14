@@ -251,8 +251,8 @@ def main():
                 f"""
                 <div class="box-container">
                     <div class="box-item"><h3>Política de manutenção</h3></div>
-                    <div class="box-item"><h3>W* = {Wotm}</h3></div>
-                    <div class="box-item"><h3>M* = {Motm}</h3></div>
+                    <div class="box-item"><h3>W* = {W}</h3></div>
+                    <div class="box-item"><h3>M* = {M}</h3></div>
                 </div>
                 """,
                 unsafe_allow_html=True,
