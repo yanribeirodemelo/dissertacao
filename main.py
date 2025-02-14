@@ -519,95 +519,51 @@ def main():
               return tx, ce, ve, pe, dx, mu
 
             # Inicializa session_state se for a primeira execução
-            if "otimizacao_feita" not in st.session_state:
-                st.session_state["otimizacao_feita"] = False
-                st.session_state["melhor_W"] = None
-                st.session_state["melhor_M"] = None
-                st.session_state["melhor_taxa"] = None
-                st.session_state["melhor_indisp"] = None
-                st.session_state["melhor_confiab"] = None
-                st.session_state["dados_W"] = []
-                st.session_state["dados_M"] = []
-                st.session_state["dados_taxa"] = []
-                st.session_state["dados_indisp"] = []
-                st.session_state["dados_confiab"] = []
+            progress_bar = st.progress(0)
+            status_text = st.empty()
+            total_iteracoes = 1275
+            contador = 0
+    
+            lista_W = []
+            lista_M = []
+            lista_taxa = []
+            lista_indisp = []
+            lista_confiab = []
             
-            # Se a otimização ainda não foi feita, executa o loop
-            if not st.session_state["otimizacao_feita"]:
-                progress_bar = st.progress(0)
-                status_text = st.empty()
-                total_iteracoes = 1275  # Número total de iterações do loop
-                contador = 0
-            
-                melhor_taxa = float("inf")  # Inicializa a melhor taxa como infinito
-                for W in range(1, 51):
-                    for M in range(W, 51):
-                        resultado = otm()  # Chamada da função de otimização
-                        contador += 1
-                        progresso_atual = int((contador / total_iteracoes) * 100)
-                        progress_bar.progress(progresso_atual)
-                        status_text.text(f"Processando: W={W}, M={M} ({progresso_atual}%)")
-            
-                        # Armazena a melhor política de manutenção
-                        if resultado[0] < melhor_taxa:
-                            st.session_state["melhor_W"] = W
-                            st.session_state["melhor_M"] = M
-                            st.session_state["melhor_taxa"] = resultado[0]
-                            st.session_state["melhor_indisp"] = resultado[4]
-                            st.session_state["melhor_confiab"] = resultado[5]
-                            melhor_taxa = resultado[0]
-            
-                        # Salva os dados para gráficos
-                        st.session_state["dados_W"].append(W)
-                        st.session_state["dados_M"].append(M)
-                        st.session_state["dados_taxa"].append(resultado[0])
-                        st.session_state["dados_indisp"].append(resultado[4])
-                        st.session_state["dados_confiab"].append(resultado[5])
-            
-                st.session_state["otimizacao_feita"] = True
-                status_text.text("Execução concluída")
-            
-            # Interface: Slider para ajustar 'delta' sem reiniciar cálculos
-            delta = st.slider("Ajuste o intervalo (Δ)", min_value=1, max_value=10, value=5)
-            
-            # Obtém valores otimizados salvos
-            Wotm = st.session_state["melhor_W"]
-            Motm = st.session_state["melhor_M"]
-            menortaxa = st.session_state["melhor_taxa"]
-            menorinatividade = st.session_state["melhor_indisp"]
-            maiorconfiabilidade = st.session_state["melhor_confiab"]
-            
-            # Define os limites para o zoom dos gráficos
-            w_min = max(Wotm - delta, 1)
-            w_max = min(Wotm + delta, 50)
-            m_min = max(Motm - delta, 1)
-            m_max = min(Motm + delta, 50)
-            
-            # Filtra os dados para visualização sem recalcular tudo
-            indices_zoom = [i for i, (w, m) in enumerate(zip(st.session_state["dados_W"], st.session_state["dados_M"])) 
-                            if abs(w - Wotm) <= delta and abs(m - Motm) <= delta]
-            
-            W_zoom = [st.session_state["dados_W"][i] for i in indices_zoom]
-            M_zoom = [st.session_state["dados_M"][i] for i in indices_zoom]
-            taxa_zoom = [st.session_state["dados_taxa"][i] for i in indices_zoom]
-            indisp_zoom = [st.session_state["dados_indisp"][i] for i in indices_zoom]
-            confiab_zoom = [st.session_state["dados_confiab"][i] for i in indices_zoom]
-
+            menortaxa = 10000000000
+            for W in range(1, 50+1):
+                for M in range(W, 50+1):
+                    resultado = otm()
+                    contador += 1
+                    progresso_atual = int((contador / total_iteracoes) * 100)
+                    progress_bar.progress(progresso_atual)
+                    status_text.text(f"Processando: W={W}, M={M} ({progresso_atual}%)")
+                    if resultado[0] < menortaxa:
+                        Wotm = W
+                        Motm = M
+                        menortaxa = resultado[0]
+                        menorinatividade = resultado[4]
+                        maiorconfiabilidade = resultado[5]
+                    lista_W.append(W)
+                    lista_M.append(M)
+                    lista_taxa.append(resultado[0])
+                    lista_indisp.append(resultado[4])
+                    lista_confiab.append(resultado[5])
             def criar_grafico_3D(x, y, z, eixo_z):
                 fig = plt.figure(figsize=(8, 6), dpi=150)  # Maior resolução
                 ax = fig.add_subplot(111, projection='3d')
             
                 # Criando o scatter plot com melhor visual
                 sc = ax.scatter(x, y, z, c=z, cmap='viridis', s=20, alpha=0.85)
-            
-                # Aplicando os limites no gráfico (variáveis w_min, w_max, m_min e m_max devem estar definidas)
+    
+                # Aplicando os limites no gráfico
                 ax.set_xlim(w_min, w_max)
                 ax.set_ylim(m_min, m_max)
             
                 # Labels dos eixos
                 ax.set_xlabel("W", fontsize=12, labelpad=10)
                 ax.set_ylabel("M", fontsize=12, labelpad=10)
-                # ax.set_zlabel(eixo_z, fontsize=12, labelpad=10, rotation=90)  # Rota z para lateral
+                #ax.set_zlabel(eixo_z, fontsize=12, labelpad=10, rotation=90)  # Rota z para lateral
             
                 # Melhorando visual do gráfico
                 ax.xaxis.pane.fill = False  # Remove fundo cinza
@@ -654,7 +610,7 @@ def main():
                 """,
                 unsafe_allow_html=True,
             )
-            
+    
             # CSS para aplicar a borda em cada coluna
             st.markdown(
                 """
@@ -674,16 +630,17 @@ def main():
             
             # Criando colunas
             col1, col2, col3 = st.columns(3)
-            
-            # Slider para ajustar o valor de delta (entre 5 e 50)
-            delta = st.slider("Ajuste Delta", min_value=5, max_value=50, value=5, step=1)
-            
-            # Definindo os limites para os eixos com base no delta
+    
+            delta = 5  # ajuste conforme necessário
+    
+            # Para W
             w_min = max(Wotm - delta, 1)
             w_max = min(Wotm + delta, 50)
+            
+            # Para M
             m_min = max(Motm - delta, 1)
             m_max = min(Motm + delta, 50)
-            
+                
             # Filtrar os dados que estejam dentro do intervalo desejado
             indices_zoom = [i for i, (w, m) in enumerate(zip(lista_W, lista_M)) 
                             if abs(w - Wotm) <= delta and abs(m - Motm) <= delta]
@@ -693,7 +650,7 @@ def main():
             lista_taxa_zoom = [lista_taxa[i] for i in indices_zoom]
             lista_indisp_zoom = [lista_indisp[i] for i in indices_zoom]
             lista_confiab_zoom = [lista_confiab[i] for i in indices_zoom]
-            
+    
             # Criando os blocos com borda em cada coluna
             with col1:
                 st.markdown(
@@ -733,7 +690,7 @@ def main():
                 )
                 fig_confiab = criar_grafico_3D(lista_W_zoom, lista_M_zoom, lista_confiab_zoom, "Confiabilidade Operacional")
                 st.pyplot(fig_confiab)
-            
+    
             st.markdown(
                 """
                 <style>
@@ -744,12 +701,11 @@ def main():
                 """,
                 unsafe_allow_html=True,
             )
-            
+    
             texto = '''Este protótipo possui restrições quanto ao espaço de busca de soluções, com W,M ∈ {1,...,50}. Se for do interesse do usuário utilizar uma gama maior de combinações de soluções ou se houver alguma dúvida sobre o estudo e/ou este protótipo, elas podem ser direcionadas para qualquer um dos endereços de e-mail abaixo. Por fim, se esta aplicação for utilizada para qualquer propósito, todos os autores devem ser informados.'''
             st.markdown(f'<p class="justificado">{texto}</p>', unsafe_allow_html=True)
             st.write('''y.r.melo@random.org.br''')
             st.write('''c.a.v.cavalcante@random.org.br''')
-
     
     if choice == menu[2]:
         
