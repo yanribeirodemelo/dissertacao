@@ -558,7 +558,7 @@ def main():
                 # Labels dos eixos
                 ax.set_xlabel("W", fontsize=12, labelpad=10)
                 ax.set_ylabel("M", fontsize=12, labelpad=10)
-                ax.set_zlabel(eixo_z, fontsize=12, labelpad=10, rotation=90)  # Rota z para lateral
+                #ax.set_zlabel(eixo_z, fontsize=12, labelpad=10, rotation=90)  # Rota z para lateral
             
                 # Melhorando visual do gráfico
                 ax.xaxis.pane.fill = False  # Remove fundo cinza
