@@ -541,11 +541,11 @@ def main():
                         menortaxa = resultado[0]
                         menorinatividade = resultado[4]
                         maiorconfiabilidade = resultado[5]
-                        lista_W.append(W)
-                        lista_M.append(M)
-                        lista_taxa.append(taxa)
-                        lista_indisp.append(downtimerate)
-                        lista_confiab.append(mtbof)
+                    lista_W.append(W)
+                    lista_M.append(M)
+                    lista_taxa.append(resultado[0])
+                    lista_indisp.append(resultado[4])
+                    lista_confiab.append(resultado[5])
 
             # Função para criar gráficos 3D com melhor qualidade e visual limpo
             def criar_grafico_3D(x, y, z, eixo_z):
