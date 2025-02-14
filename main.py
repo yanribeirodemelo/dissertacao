@@ -257,6 +257,61 @@ def main():
                 """,
                 unsafe_allow_html=True,
             )
+
+            # CSS para aplicar a borda em cada coluna
+            st.markdown(
+                """
+                <style>
+                    .column-box {
+                        border: 2px solid black; /* Cor da borda */
+                        border-radius: 10px; /* Bordas arredondadas */
+                        padding: 15px; /* Espaço interno */
+                        text-align: center;
+                        width: 100%; /* Garante que ocupa toda a largura da coluna */
+                        margin-bottom: 10px; /* Espaço entre as colunas */
+                    }
+                </style>
+                """,
+                unsafe_allow_html=True,
+            )
+            
+            # Criando colunas
+            col1, col2, col3 = st.columns(3)
+            
+            # Criando os blocos com borda em cada coluna
+            with col1:
+                st.markdown(
+                    f"""
+                    <div class="column-box">
+                        <h3>Taxa de custo</h3>
+                        <h2>{taxadecusto[0]}</h2>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+            
+            with col2:
+                st.markdown(
+                    f"""
+                    <div class="column-box">
+                        <h3>Taxa de indisponibilidade</h3>
+                        <h2>{taxadecusto[4]}</h2>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+            
+            with col3:
+                st.markdown(
+                    f"""
+                    <div class="column-box">
+                        <h3>Confiabilidade operacional</h3>
+                        <h2>{taxadecusto[5]}</h2>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+
             
             #col1, col2, col3 = st.columns(3)
             #col1.subheader("Política de manutenção")
