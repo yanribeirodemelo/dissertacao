@@ -10,6 +10,8 @@ import sys
 from streamlit import cli as stcli
 from scipy.integrate import quad
 from PIL import Image
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 st.set_page_config(
     page_title="Política de Manutenção",
