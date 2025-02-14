@@ -306,7 +306,7 @@ def main():
                     f"""
                     <div class="column-box">
                         <h3>Confiabilidade operacional</h3>
-                        <h2>{round(taxadecusto[5], 3)}</h2>
+                        <h2>{round(taxadecusto[5], 2)}</h2>
                     </div>
                     """,
                     unsafe_allow_html=True,
@@ -343,9 +343,9 @@ def main():
         q = st.number_input("Insira o parâmetro de probabilidade de oportunidade em uma visita", min_value = 0.0, max_value = 1.0, value = 0.2) # taxa de chegada de oportunidades
         s = st.number_input("Insira o parâmetro de intervalo de tempo entre visitas", min_value = 0.0, value = 1.0) # intervalo entre visitas
 
-        opcoes = ["Taxa de custo", "Taxa de indisponibilidade", "Confiabilidade operacional"]
+        #opcoes = ["Taxa de custo", "Taxa de indisponibilidade", "Confiabilidade operacional"]
         
-        escolha = st.selectbox("Defina a medida de desempenho você deseja otimizar", opcoes)
+        #escolha = st.selectbox("Defina a medida de desempenho você deseja otimizar", opcoes)
         
         st.subheader("Clique no botão abaixo para executar esta aplicação:")
         botao = st.button("Executar")
@@ -520,53 +520,155 @@ def main():
             status_text = st.empty()
             total_iteracoes = 1275
             contador = 0
+
+            menortaxa = 10000000000
+            for W in range(1, 50+1):
+                for M in range(W, 50+1):
+                    resultado = otm()
+                    contador += 1
+                    progresso_atual = int((contador / total_iteracoes) * 100)
+                    progress_bar.progress(progresso_atual)
+                    status_text.text(f"Processando: W={W}, M={M} ({progresso_atual}%)")
+                    if resultado[0] < menortaxa:
+                        Wotm = W
+                        Motm = M
+                        menortaxa = resultado[0]
+                        menorinatividade = resultado[4]
+                        maiorconfiabilidade = resultado[5]
             
-            if escolha == "Taxa de custo":
-                menortaxa = 10000000000
-                for W in range(1, 50+1):
-                    for M in range(W, 50+1):
-                        resultado = otm()
-                        contador += 1
-                        progresso_atual = int((contador / total_iteracoes) * 100)
-                        progress_bar.progress(progresso_atual)
-                        status_text.text(f"Processando: W={W}, M={M} ({progresso_atual}%)")
-                        if resultado[0] < menortaxa:
-                            Wotm = W
-                            Motm = M
-                            menortaxa = resultado[0]
-                            menorinatividade = resultado[4]
-                            maiorconfiabilidade = resultado[5]
-            if escolha == "Taxa de indisponibilidade":
-                menorinatividade = 10000000000
-                for W in range(1, 50+1):
-                    for M in range(W, 50+1):
-                        resultado = otm()
-                        contador += 1
-                        progresso_atual = int((contador / total_iteracoes) * 100)
-                        progress_bar.progress(progresso_atual)
-                        status_text.text(f"Processando: W={W}, M={M} ({progresso_atual}%)")
-                        if resultado[4] < menorinatividade:
-                            Wotm = W
-                            Motm = M
-                            menortaxa = resultado[0]
-                            menorinatividade = resultado[4]
-                            maiorconfiabilidade = resultado[5]
-            if escolha == "Confiabilidade operacional":
-                maiorconfiabilidade = 0
-                for W in range(1, 51):
-                    for M in range(W, 51):
-                        resultado = otm()
-                        contador += 1
-                        progresso_atual = int((contador / total_iteracoes) * 100)
-                        progress_bar.progress(progresso_atual)
-                        status_text.text(f"Processando: W={W}, M={M} ({progresso_atual}%)")
-                        if resultado[5] > maiorconfiabilidade:
-                            Wotm = W
-                            Motm = M
-                            menortaxa = resultado[0]
-                            menorinatividade = resultado[4]
-                            maiorconfiabilidade = resultado[5]
+            st.markdown(
+                """
+                <style>
+                    .box-container {
+                        border: 2px solid black; /* Cor da borda */
+                        border-radius: 10px; /* Bordas arredondadas */
+                        padding: 15px; /* Espaço interno */
+                        text-align: center;
+                        width: 100%; /* Garante que a largura ocupe toda a linha */
+                        display: flex; /* Para organizar os elementos lado a lado */
+                        justify-content: space-around; /* Espaço uniforme entre elementos */
+                        align-items: center; /* Alinha verticalmente */
+                    }
+                    .box-item {
+                        flex: 1; /* Permite que os itens fiquem do mesmo tamanho */
+                    }
+                </style>
+                """,
+                unsafe_allow_html=True,
+            )
             
+            # Criando a caixa com os três elementos dentro
+            st.markdown(
+                f"""
+                <div class="box-container">
+                    <div class="box-item"><h3>Política de manutenção</h3></div>
+                    <div class="box-item"><h3>W = {W}</h3></div>
+                    <div class="box-item"><h3>M = {M}</h3></div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+            # CSS para aplicar a borda em cada coluna
+            st.markdown(
+                """
+                <style>
+                    .column-box {
+                        border: 2px solid black; /* Cor da borda */
+                        border-radius: 10px; /* Bordas arredondadas */
+                        padding: 15px; /* Espaço interno */
+                        text-align: center;
+                        width: 100%; /* Garante que ocupa toda a largura da coluna */
+                        margin-bottom: 10px; /* Espaço entre as colunas */
+                    }
+                </style>
+                """,
+                unsafe_allow_html=True,
+            )
+            
+            # Criando colunas
+            col1, col2, col3 = st.columns(3)
+            
+            # Criando os blocos com borda em cada coluna
+            with col1:
+                st.markdown(
+                    f"""
+                    <div class="column-box">
+                        <h3>Taxa de custo</h3>
+                        <h2>{round(taxadecusto[0], 3)}</h2>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+            
+            with col2:
+                st.markdown(
+                    f"""
+                    <div class="column-box">
+                        <h3>Taxa de indisponibilidade</h3>
+                        <h2>{round(taxadecusto[4], 3)}</h2>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+            
+            with col3:
+                st.markdown(
+                    f"""
+                    <div class="column-box">
+                        <h3>Confiabilidade operacional</h3>
+                        <h2>{round(taxadecusto[5], 2)}</h2>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+
+            #if escolha == "Taxa de custo":
+            #    menortaxa = 10000000000
+            #    for W in range(1, 50+1):
+            #        for M in range(W, 50+1):
+            #            resultado = otm()
+            #            contador += 1
+            #            progresso_atual = int((contador / total_iteracoes) * 100)
+            #            progress_bar.progress(progresso_atual)
+            #            status_text.text(f"Processando: W={W}, M={M} ({progresso_atual}%)")
+            #            if resultado[0] < menortaxa:
+            #                Wotm = W
+            #                Motm = M
+            #                menortaxa = resultado[0]
+            #                menorinatividade = resultado[4]
+            #                maiorconfiabilidade = resultado[5]
+            #if escolha == "Taxa de indisponibilidade":
+            #    menorinatividade = 10000000000
+            #    for W in range(1, 50+1):
+            #        for M in range(W, 50+1):
+            #            resultado = otm()
+            #            contador += 1
+            #            progresso_atual = int((contador / total_iteracoes) * 100)
+            #            progress_bar.progress(progresso_atual)
+            #            status_text.text(f"Processando: W={W}, M={M} ({progresso_atual}%)")
+            #            if resultado[4] < menorinatividade:
+            #                Wotm = W
+            #                Motm = M
+            #                menortaxa = resultado[0]
+            #                menorinatividade = resultado[4]
+            #                maiorconfiabilidade = resultado[5]
+            #if escolha == "Confiabilidade operacional":
+            #    maiorconfiabilidade = 0
+            #    for W in range(1, 51):
+            #        for M in range(W, 51):
+            #            resultado = otm()
+            #            contador += 1
+            #            progresso_atual = int((contador / total_iteracoes) * 100)
+            #            progress_bar.progress(progresso_atual)
+            #            status_text.text(f"Processando: W={W}, M={M} ({progresso_atual}%)")
+            #            if resultado[5] > maiorconfiabilidade:
+            #                Wotm = W
+            #                Motm = M
+            #                menortaxa = resultado[0]
+            #                menorinatividade = resultado[4]
+            #                maiorconfiabilidade = resultado[5]
+         
             status_text.text("Execução concluída")
 
             col1, col2, col3 = st.columns(3)
