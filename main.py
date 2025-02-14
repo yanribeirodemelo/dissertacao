@@ -522,7 +522,7 @@ def main():
             status_text = st.empty()
             total_iteracoes = 1275
             contador = 0
-
+            
             lista_W = []
             lista_M = []
             lista_taxa = []
@@ -532,7 +532,7 @@ def main():
             menortaxa = 10000000000
             for W in range(1, 50+1):
                 for M in range(W, 50+1):
-                    resultado = otm()
+                    resultado = otm()  # Certifique-se de que a função otm() está definida corretamente
                     contador += 1
                     progresso_atual = int((contador / total_iteracoes) * 100)
                     progress_bar.progress(progresso_atual)
@@ -548,21 +548,22 @@ def main():
                     lista_taxa.append(resultado[0])
                     lista_indisp.append(resultado[4])
                     lista_confiab.append(resultado[5])
+            
             def criar_grafico_3D(x, y, z, eixo_z):
                 fig = plt.figure(figsize=(8, 6), dpi=150)  # Maior resolução
                 ax = fig.add_subplot(111, projection='3d')
             
                 # Criando o scatter plot com melhor visual
                 sc = ax.scatter(x, y, z, c=z, cmap='viridis', s=20, alpha=0.85)
-
-                # Aplicando os limites no gráfico
+            
+                # Aplicando os limites no gráfico (variáveis w_min, w_max, m_min e m_max devem estar definidas)
                 ax.set_xlim(w_min, w_max)
                 ax.set_ylim(m_min, m_max)
             
                 # Labels dos eixos
                 ax.set_xlabel("W", fontsize=12, labelpad=10)
                 ax.set_ylabel("M", fontsize=12, labelpad=10)
-                #ax.set_zlabel(eixo_z, fontsize=12, labelpad=10, rotation=90)  # Rota z para lateral
+                # ax.set_zlabel(eixo_z, fontsize=12, labelpad=10, rotation=90)  # Rota z para lateral
             
                 # Melhorando visual do gráfico
                 ax.xaxis.pane.fill = False  # Remove fundo cinza
@@ -609,7 +610,7 @@ def main():
                 """,
                 unsafe_allow_html=True,
             )
-
+            
             # CSS para aplicar a borda em cada coluna
             st.markdown(
                 """
@@ -629,17 +630,16 @@ def main():
             
             # Criando colunas
             col1, col2, col3 = st.columns(3)
-
-            delta = 5  # ajuste conforme necessário
-
-            # Para W
+            
+            # Slider para ajustar o valor de delta (entre 5 e 50)
+            delta = st.slider("Ajuste Delta", min_value=5, max_value=50, value=5, step=1)
+            
+            # Definindo os limites para os eixos com base no delta
             w_min = max(Wotm - delta, 1)
             w_max = min(Wotm + delta, 50)
-            
-            # Para M
             m_min = max(Motm - delta, 1)
             m_max = min(Motm + delta, 50)
-                
+            
             # Filtrar os dados que estejam dentro do intervalo desejado
             indices_zoom = [i for i, (w, m) in enumerate(zip(lista_W, lista_M)) 
                             if abs(w - Wotm) <= delta and abs(m - Motm) <= delta]
@@ -649,7 +649,7 @@ def main():
             lista_taxa_zoom = [lista_taxa[i] for i in indices_zoom]
             lista_indisp_zoom = [lista_indisp[i] for i in indices_zoom]
             lista_confiab_zoom = [lista_confiab[i] for i in indices_zoom]
-
+            
             # Criando os blocos com borda em cada coluna
             with col1:
                 st.markdown(
@@ -689,68 +689,7 @@ def main():
                 )
                 fig_confiab = criar_grafico_3D(lista_W_zoom, lista_M_zoom, lista_confiab_zoom, "Confiabilidade Operacional")
                 st.pyplot(fig_confiab)
-
-            #if escolha == "Taxa de custo":
-            #    menortaxa = 10000000000
-            #    for W in range(1, 50+1):
-            #        for M in range(W, 50+1):
-            #            resultado = otm()
-            #            contador += 1
-            #            progresso_atual = int((contador / total_iteracoes) * 100)
-            #            progress_bar.progress(progresso_atual)
-            #            status_text.text(f"Processando: W={W}, M={M} ({progresso_atual}%)")
-            #            if resultado[0] < menortaxa:
-            #                Wotm = W
-            #                Motm = M
-            #                menortaxa = resultado[0]
-            #                menorinatividade = resultado[4]
-            #                maiorconfiabilidade = resultado[5]
-            #if escolha == "Taxa de indisponibilidade":
-            #    menorinatividade = 10000000000
-            #    for W in range(1, 50+1):
-            #        for M in range(W, 50+1):
-            #            resultado = otm()
-            #            contador += 1
-            #            progresso_atual = int((contador / total_iteracoes) * 100)
-            #            progress_bar.progress(progresso_atual)
-            #            status_text.text(f"Processando: W={W}, M={M} ({progresso_atual}%)")
-            #            if resultado[4] < menorinatividade:
-            #                Wotm = W
-            #                Motm = M
-            #                menortaxa = resultado[0]
-            #                menorinatividade = resultado[4]
-            #                maiorconfiabilidade = resultado[5]
-            #if escolha == "Confiabilidade operacional":
-            #    maiorconfiabilidade = 0
-            #    for W in range(1, 51):
-            #        for M in range(W, 51):
-            #            resultado = otm()
-            #            contador += 1
-            #            progresso_atual = int((contador / total_iteracoes) * 100)
-            #            progress_bar.progress(progresso_atual)
-            #            status_text.text(f"Processando: W={W}, M={M} ({progresso_atual}%)")
-            #            if resultado[5] > maiorconfiabilidade:
-            #                Wotm = W
-            #                Motm = M
-            #                menortaxa = resultado[0]
-            #                menorinatividade = resultado[4]
-            #                maiorconfiabilidade = resultado[5]
-         
-            #col1, col2, col3 = st.columns(3)
-            #col1.subheader("Política de manutenção")
-            #col2.subheader("W*={}" .format(Wotm))
-            #col3.subheader("M*={}" .format(Motm))
             
-            #col1, col2, col3 = st.columns(3)
-            #col1.subheader("Taxa de custo")
-            #col2.subheader("Taxa de indisponibilidade")
-            #col3.subheader("Confiabilidade operacional")
-
-            #col1, col2, col3 = st.columns(3)
-            #col1.subheader(menortaxa)
-            #col2.subheader(menorinatividade)
-            #col3.subheader(maiorconfiabilidade)
-
             st.markdown(
                 """
                 <style>
@@ -761,11 +700,12 @@ def main():
                 """,
                 unsafe_allow_html=True,
             )
-
+            
             texto = '''Este protótipo possui restrições quanto ao espaço de busca de soluções, com W,M ∈ {1,...,50}. Se for do interesse do usuário utilizar uma gama maior de combinações de soluções ou se houver alguma dúvida sobre o estudo e/ou este protótipo, elas podem ser direcionadas para qualquer um dos endereços de e-mail abaixo. Por fim, se esta aplicação for utilizada para qualquer propósito, todos os autores devem ser informados.'''
             st.markdown(f'<p class="justificado">{texto}</p>', unsafe_allow_html=True)
             st.write('''y.r.melo@random.org.br''')
             st.write('''c.a.v.cavalcante@random.org.br''')
+
     
     if choice == menu[2]:
         
