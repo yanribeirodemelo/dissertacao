@@ -225,6 +225,30 @@ def main():
               return tx, ce, ve, pe, dx, mu
 
             taxadecusto = otm()
+
+            # Criando colunas
+            col1, col2, col3 = st.columns(3)
+            
+            # Aplicando estilo para bordas nas colunas
+            st.markdown(
+            """
+            <style>
+                .column-box {
+                    border: 2px solid black; /* Cor da borda */
+                    border-radius: 10px; /* Bordas arredondadas */
+                    padding: 10px;
+                    text-align: center;
+                }
+            </style>
+            """,
+            unsafe_allow_html=True,
+            )
+            
+            # Criando o conteúdo das colunas dentro de divs estilizadas
+            col1.markdown('<div class="column-box"><h3>Política de manutenção</h3></div>', unsafe_allow_html=True)
+            col2.markdown(f'<div class="column-box"><h3>W*={Wotm}</h3></div>', unsafe_allow_html=True)
+            col3.markdown(f'<div class="column-box"><h3>M*={Motm}</h3></div>', unsafe_allow_html=True)
+            
             col1, col2, col3 = st.columns(3)
             col1.subheader("Política de manutenção")
             col2.subheader("W={}" .format(W))
@@ -482,7 +506,7 @@ def main():
                             maiorconfiabilidade = resultado[5]
             
             status_text.text("Execução concluída")
-            
+
             col1, col2, col3 = st.columns(3)
             col1.subheader("Política de manutenção")
             col2.subheader("W*={}" .format(Wotm))
