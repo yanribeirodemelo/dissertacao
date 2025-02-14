@@ -225,29 +225,38 @@ def main():
               return tx, ce, ve, pe, dx, mu
 
             taxadecusto = otm()
-
-            # Criando colunas
-            col1, col2, col3 = st.columns(3)
-            
-            # Aplicando estilo para bordas nas colunas
             st.markdown(
-            """
-            <style>
-                .column-box {
-                    border: 2px solid black; /* Cor da borda */
-                    border-radius: 10px; /* Bordas arredondadas */
-                    padding: 10px;
-                    text-align: center;
-                }
-            </style>
-            """,
-            unsafe_allow_html=True,
+                """
+                <style>
+                    .box-container {
+                        border: 2px solid black; /* Cor da borda */
+                        border-radius: 10px; /* Bordas arredondadas */
+                        padding: 15px; /* Espaço interno */
+                        text-align: center;
+                        width: 100%; /* Garante que a largura ocupe toda a linha */
+                        display: flex; /* Para organizar os elementos lado a lado */
+                        justify-content: space-around; /* Espaço uniforme entre elementos */
+                        align-items: center; /* Alinha verticalmente */
+                    }
+                    .box-item {
+                        flex: 1; /* Permite que os itens fiquem do mesmo tamanho */
+                    }
+                </style>
+                """,
+                unsafe_allow_html=True,
             )
             
-            # Criando o conteúdo das colunas dentro de divs estilizadas
-            col1.markdown('<div class="column-box"><h3>Política de manutenção</h3></div>', unsafe_allow_html=True)
-            col2.markdown(f'<div class="column-box"><h3>W*={W}</h3></div>', unsafe_allow_html=True)
-            col3.markdown(f'<div class="column-box"><h3>M*={M}</h3></div>', unsafe_allow_html=True)
+            # Criando a caixa com os três elementos dentro
+            st.markdown(
+                f"""
+                <div class="box-container">
+                    <div class="box-item"><h3>Política de manutenção</h3></div>
+                    <div class="box-item"><h3>W* = {Wotm}</h3></div>
+                    <div class="box-item"><h3>M* = {Motm}</h3></div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
             
             col1, col2, col3 = st.columns(3)
             col1.subheader("Política de manutenção")
