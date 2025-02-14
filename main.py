@@ -246,8 +246,8 @@ def main():
             
             # Criando o conteúdo das colunas dentro de divs estilizadas
             col1.markdown('<div class="column-box"><h3>Política de manutenção</h3></div>', unsafe_allow_html=True)
-            col2.markdown(f'<div class="column-box"><h3>W*={Wotm}</h3></div>', unsafe_allow_html=True)
-            col3.markdown(f'<div class="column-box"><h3>M*={Motm}</h3></div>', unsafe_allow_html=True)
+            col2.markdown(f'<div class="column-box"><h3>W*={W}</h3></div>', unsafe_allow_html=True)
+            col3.markdown(f'<div class="column-box"><h3>M*={M}</h3></div>', unsafe_allow_html=True)
             
             col1, col2, col3 = st.columns(3)
             col1.subheader("Política de manutenção")
