@@ -684,17 +684,39 @@ def main():
             #col1.subheader(menortaxa)
             #col2.subheader(menorinatividade)
             #col3.subheader(maiorconfiabilidade)
-            
-            st.write('''Este protótipo possui restrições quanto ao espaço de busca de soluções, com W,M ∈ {1,...,50}. Se for do interesse do usuário utilizar uma gama maior de combinações de soluções ou se houver alguma dúvida sobre o estudo e/ou este protótipo, elas podem ser direcionadas para qualquer um dos endereços de e-mail abaixo. Por fim, se esta aplicação for utilizada para qualquer propósito, todos os autores devem ser informados.''')
+
+            st.markdown(
+                """
+                <style>
+                    .justificado {
+                        text-align: justify;
+                    }
+                </style>
+                """,
+                unsafe_allow_html=True,
+            )
+            texto = '''Este protótipo possui restrições quanto ao espaço de busca de soluções, com W,M ∈ {1,...,50}. Se for do interesse do usuário utilizar uma gama maior de combinações de soluções ou se houver alguma dúvida sobre o estudo e/ou este protótipo, elas podem ser direcionadas para qualquer um dos endereços de e-mail abaixo. Por fim, se esta aplicação for utilizada para qualquer propósito, todos os autores devem ser informados.'''
+            st.markdown(f'<p class="justificado">{texto}</p>', unsafe_allow_html=True)
             st.write('''y.r.melo@random.org.br''')
             st.write('''c.a.v.cavalcante@random.org.br''')
     
     if choice == menu[2]:
         
         st.header(menu[2])
-
-        st.write('''Este protótipo foi criado por membros do grupo de pesquisa RANDOM, que tem como objetivo auxiliar na aplicação de uma política de manutenção periódica oportuna para sistemas de difícil acesso''')
-        st.write('''Este protótipo possui restrições quanto ao espaço de busca de soluções. Se for do interesse do usuário utilizar uma gama maior de combinações de soluções ou se houver alguma dúvida sobre o estudo e/ou este protótipo, elas podem ser direcionadas para qualquer um dos endereços de e-mail abaixo. Por fim, se esta aplicação for utilizada para qualquer propósito, todos os autores devem ser informados.''')
+        st.markdown(
+                """
+                <style>
+                    .justificado {
+                        text-align: justify;
+                    }
+                </style>
+                """,
+                unsafe_allow_html=True,
+            )
+        texto1 = '''Este protótipo foi criado por membros do grupo de pesquisa RANDOM, que tem como objetivo auxiliar na aplicação de uma política de manutenção periódica oportuna para sistemas de difícil acesso'''
+        texto2 = '''Este protótipo possui restrições quanto ao espaço de busca de soluções, com W,M ∈ {1,...,50}. Se for do interesse do usuário utilizar uma gama maior de combinações de soluções ou se houver alguma dúvida sobre o estudo e/ou este protótipo, elas podem ser direcionadas para qualquer um dos endereços de e-mail abaixo. Por fim, se esta aplicação for utilizada para qualquer propósito, todos os autores devem ser informados.'''
+        st.markdown(f'<p class="justificado">{texto1}</p>', unsafe_allow_html=True)
+        st.markdown(f'<p class="justificado">{texto2}</p>', unsafe_allow_html=True)
         st.write('''y.r.melo@random.org.br''')
         st.write('''c.a.v.cavalcante@random.org.br''')
 
