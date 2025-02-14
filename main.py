@@ -633,16 +633,16 @@ def main():
             delta = 5  # ajuste conforme necessário
 
             # Para W
-            w_min = max(Wotmtx - delta, 1)
-            w_max = min(Wotmtx + delta, 50)
+            w_min = max(Wotm - delta, 1)
+            w_max = min(Wotm + delta, 50)
             
             # Para M
-            m_min = max(Motmtx - delta, 1)
-            m_max = min(Motmtx + delta, 50)
+            m_min = max(Motm - delta, 1)
+            m_max = min(Motm + delta, 50)
                 
             # Filtrar os dados que estejam dentro do intervalo desejado
             indices_zoom = [i for i, (w, m) in enumerate(zip(lista_W, lista_M)) 
-                            if abs(w - Wotmtx) <= delta and abs(m - Motmtx) <= delta]
+                            if abs(w - Wotm) <= delta and abs(m - Motm) <= delta]
             
             lista_W_zoom = [lista_W[i] for i in indices_zoom]
             lista_M_zoom = [lista_M[i] for i in indices_zoom]
