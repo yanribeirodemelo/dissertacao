@@ -554,6 +554,10 @@ def main():
             
                 # Criando o scatter plot com melhor visual
                 sc = ax.scatter(x, y, z, c=z, cmap='viridis', s=20, alpha=0.85)
+
+                # Aplicando os limites no gráfico
+                ax.set_xlim(w_min, w_max)
+                ax.set_ylim(m_min, m_max)
             
                 # Labels dos eixos
                 ax.set_xlabel("W", fontsize=12, labelpad=10)
@@ -571,7 +575,7 @@ def main():
                 cbar.set_label(eixo_z, fontsize=12)
             
                 return fig
-
+            
             status_text.text("Execução concluída")
             st.markdown(
                 """
@@ -625,7 +629,27 @@ def main():
             
             # Criando colunas
             col1, col2, col3 = st.columns(3)
+
+            delta = 5  # ajuste conforme necessário
+
+            # Para W
+            w_min = max(Wotmtx - delta, 1)
+            w_max = min(Wotmtx + delta, 50)
             
+            # Para M
+            m_min = max(Motmtx - delta, 1)
+            m_max = min(Motmtx + delta, 50)
+                
+            # Filtrar os dados que estejam dentro do intervalo desejado
+            indices_zoom = [i for i, (w, m) in enumerate(zip(lista_W, lista_M)) 
+                            if abs(w - Wotmtx) <= delta and abs(m - Motmtx) <= delta]
+            
+            lista_W_zoom = [lista_W[i] for i in indices_zoom]
+            lista_M_zoom = [lista_M[i] for i in indices_zoom]
+            lista_taxa_zoom = [lista_taxa[i] for i in indices_zoom]
+            lista_indisp_zoom = [lista_indisp[i] for i in indices_zoom]
+            lista_confiab_zoom = [lista_confiab[i] for i in indices_zoom]
+
             # Criando os blocos com borda em cada coluna
             with col1:
                 st.markdown(
@@ -637,7 +661,7 @@ def main():
                     """,
                     unsafe_allow_html=True,
                 )
-                fig_taxa = criar_grafico_3D(lista_W, lista_M, lista_taxa, "Taxa de Custo")
+                fig_taxa = criar_grafico_3D(lista_W_zoom, lista_M_zoom, lista_taxa_zoom, "Taxa de Custo")
                 st.pyplot(fig_taxa)
             
             with col2:
@@ -650,7 +674,7 @@ def main():
                     """,
                     unsafe_allow_html=True,
                 )
-                fig_indisp = criar_grafico_3D(lista_W, lista_M, lista_indisp, "Taxa de Indisponibilidade")
+                fig_indisp = criar_grafico_3D(lista_W_zoom, lista_M_zoom, lista_indisp_zoom, "Taxa de Indisponibilidade")
                 st.pyplot(fig_indisp)
             
             with col3:
@@ -663,7 +687,7 @@ def main():
                     """,
                     unsafe_allow_html=True,
                 )
-                fig_confiab = criar_grafico_3D(lista_W, lista_M, lista_confiab, "Confiabilidade Operacional")
+                fig_confiab = criar_grafico_3D(lista_W_zoom, lista_M_zoom, lista_confiab_zoom, "Confiabilidade Operacional")
                 st.pyplot(fig_confiab)
 
             #if escolha == "Taxa de custo":
