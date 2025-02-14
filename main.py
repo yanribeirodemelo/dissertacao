@@ -546,8 +546,6 @@ def main():
                     lista_taxa.append(resultado[0])
                     lista_indisp.append(resultado[4])
                     lista_confiab.append(resultado[5])
-
-            # Função para criar gráficos 3D com melhor qualidade e visual limpo
             def criar_grafico_3D(x, y, z, eixo_z):
                 fig = plt.figure(figsize=(8, 6), dpi=150)  # Maior resolução
                 ax = fig.add_subplot(111, projection='3d')
@@ -558,7 +556,7 @@ def main():
                 # Labels dos eixos
                 ax.set_xlabel("W", fontsize=12, labelpad=10)
                 ax.set_ylabel("M", fontsize=12, labelpad=10)
-                #ax.set_zlabel(eixo_z, fontsize=12, labelpad=10)
+                ax.set_zlabel(eixo_z, fontsize=12, labelpad=10, rotation=90)  # Rota z para lateral
             
                 # Melhorando visual do gráfico
                 ax.xaxis.pane.fill = False  # Remove fundo cinza
@@ -570,8 +568,7 @@ def main():
                 cbar = plt.colorbar(sc, shrink=0.6, aspect=10)
                 cbar.set_label(eixo_z, fontsize=12)
             
-                # Renderizando o gráfico no Streamlit
-                st.pyplot(fig)
+                return fig
 
             status_text.text("Execução concluída")
             st.markdown(
@@ -638,6 +635,8 @@ def main():
                     """,
                     unsafe_allow_html=True,
                 )
+                fig_taxa = criar_grafico_3D(lista_W, lista_M, lista_taxa, "Taxa de Custo")
+                st.pyplot(fig_taxa)
             
             with col2:
                 st.markdown(
@@ -649,6 +648,8 @@ def main():
                     """,
                     unsafe_allow_html=True,
                 )
+                fig_indisp = criar_grafico_3D(lista_W, lista_M, lista_indisp, "Taxa de Indisponibilidade")
+                st.pyplot(fig_indisp)
             
             with col3:
                 st.markdown(
@@ -660,6 +661,8 @@ def main():
                     """,
                     unsafe_allow_html=True,
                 )
+                fig_confiab = criar_grafico_3D(lista_W, lista_M, lista_confiab, "Confiabilidade Operacional")
+                st.pyplot(fig_confiab)
 
             #if escolha == "Taxa de custo":
             #    menortaxa = 10000000000
@@ -733,11 +736,6 @@ def main():
                 unsafe_allow_html=True,
             )
 
-            col1, col2, col3 = st.columns(3)
-            col1.criar_grafico_3D(lista_W, lista_M, lista_taxa, "Taxa de Custo")
-            col2.criar_grafico_3D(lista_W, lista_M, lista_indisp, "Taxa de Indisponibilidade")
-            col3.criar_grafico_3D(lista_W, lista_M, lista_confiab, "Confiabilidade Operacional")
-            
             texto = '''Este protótipo possui restrições quanto ao espaço de busca de soluções, com W,M ∈ {1,...,50}. Se for do interesse do usuário utilizar uma gama maior de combinações de soluções ou se houver alguma dúvida sobre o estudo e/ou este protótipo, elas podem ser direcionadas para qualquer um dos endereços de e-mail abaixo. Por fim, se esta aplicação for utilizada para qualquer propósito, todos os autores devem ser informados.'''
             st.markdown(f'<p class="justificado">{texto}</p>', unsafe_allow_html=True)
             st.write('''y.r.melo@random.org.br''')
