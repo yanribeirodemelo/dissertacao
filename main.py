@@ -535,7 +535,8 @@ def main():
                         menortaxa = resultado[0]
                         menorinatividade = resultado[4]
                         maiorconfiabilidade = resultado[5]
-            
+
+            status_text.text("Execução concluída")
             st.markdown(
                 """
                 <style>
@@ -562,8 +563,8 @@ def main():
                 f"""
                 <div class="box-container">
                     <div class="box-item"><h3>Política de manutenção</h3></div>
-                    <div class="box-item"><h3>W = {W}</h3></div>
-                    <div class="box-item"><h3>M = {M}</h3></div>
+                    <div class="box-item"><h3>W = {Wotm}</h3></div>
+                    <div class="box-item"><h3>M = {Motm}</h3></div>
                 </div>
                 """,
                 unsafe_allow_html=True,
@@ -595,7 +596,7 @@ def main():
                     f"""
                     <div class="column-box">
                         <h3>Taxa de custo</h3>
-                        <h2>{round(taxadecusto[0], 3)}</h2>
+                        <h2>{round(menortaxa, 3)}</h2>
                     </div>
                     """,
                     unsafe_allow_html=True,
@@ -606,7 +607,7 @@ def main():
                     f"""
                     <div class="column-box">
                         <h3>Taxa de indisponibilidade</h3>
-                        <h2>{round(taxadecusto[4], 3)}</h2>
+                        <h2>{round(menorinatividade, 3)}</h2>
                     </div>
                     """,
                     unsafe_allow_html=True,
@@ -617,7 +618,7 @@ def main():
                     f"""
                     <div class="column-box">
                         <h3>Confiabilidade operacional</h3>
-                        <h2>{round(taxadecusto[5], 2)}</h2>
+                        <h2>{round(maiorconfiabilidade, 2)}</h2>
                     </div>
                     """,
                     unsafe_allow_html=True,
@@ -669,22 +670,20 @@ def main():
             #                menorinatividade = resultado[4]
             #                maiorconfiabilidade = resultado[5]
          
-            status_text.text("Execução concluída")
-
-            col1, col2, col3 = st.columns(3)
-            col1.subheader("Política de manutenção")
-            col2.subheader("W*={}" .format(Wotm))
-            col3.subheader("M*={}" .format(Motm))
+            #col1, col2, col3 = st.columns(3)
+            #col1.subheader("Política de manutenção")
+            #col2.subheader("W*={}" .format(Wotm))
+            #col3.subheader("M*={}" .format(Motm))
             
-            col1, col2, col3 = st.columns(3)
-            col1.subheader("Taxa de custo")
-            col2.subheader("Taxa de indisponibilidade")
-            col3.subheader("Confiabilidade operacional")
+            #col1, col2, col3 = st.columns(3)
+            #col1.subheader("Taxa de custo")
+            #col2.subheader("Taxa de indisponibilidade")
+            #col3.subheader("Confiabilidade operacional")
 
-            col1, col2, col3 = st.columns(3)
-            col1.subheader(menortaxa)
-            col2.subheader(menorinatividade)
-            col3.subheader(maiorconfiabilidade)
+            #col1, col2, col3 = st.columns(3)
+            #col1.subheader(menortaxa)
+            #col2.subheader(menorinatividade)
+            #col3.subheader(maiorconfiabilidade)
             
             st.write('''Este protótipo possui restrições quanto ao espaço de busca de soluções, com W,M ∈ {1,...,50}. Se for do interesse do usuário utilizar uma gama maior de combinações de soluções ou se houver alguma dúvida sobre o estudo e/ou este protótipo, elas podem ser direcionadas para qualquer um dos endereços de e-mail abaixo. Por fim, se esta aplicação for utilizada para qualquer propósito, todos os autores devem ser informados.''')
             st.write('''y.r.melo@random.org.br''')
