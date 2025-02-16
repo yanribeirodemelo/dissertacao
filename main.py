@@ -721,21 +721,22 @@ def main():
                 unsafe_allow_html=True,
             )
         
-        texto1 = '''Este produto tecnológico, desenvolvido por Yan Melo e Cristiano Cavalcante, para apoiar a tomada de decisão na manutenção de sistemas críticos, como geração e distribuição de energia, abastecimento de água e saneamento básico, especialmente aqueles localizados em áreas remotas ou com infraestrutura complexa. Esses sistemas apresentam desafios operacionais significativos, exigindo estratégias de manutenção que conciliem eficácia e viabilidade operacional.
-
-A solução proposta baseia-se em um modelo de manutenção estruturado em períodos discretos, permitindo a integração de ações preventivas e corretivas conforme a disponibilidade de recursos, caracterizada pela ocorrência de oportunidades. Essa abordagem periódica facilita o planejamento estratégico das intervenções e aproxima a teoria da realidade prática dos sistemas industriais.
-
-A otimização da política de manutenção é realizada por algoritmos numéricos que avaliam diferentes cenários de renovação do sistema. O modelo considera fatores como os custos das manutenções corretiva e preventiva, o custo da inatividade após uma falha, o custo para garantir uma ação de manutenção, a probabilidade de surgimento de oportunidades em visitas, os intervalos entre os períodos de visita e a vida útil do sistema.
-
-A aplicação numérica do modelo, aliada a uma análise de sensibilidade, demonstra que a abordagem proposta é particularmente eficaz em cenários com recursos limitados e poucas oportunidades de manutenção. Além disso, a comparação com políticas de manutenção contínuas evidencia que a discretização dos períodos não compromete significativamente o desempenho do sistema, reforçando a viabilidade prática da metodologia.
-
-Esse produto tecnológico oferece uma ferramenta de suporte à decisão acessível e intuitiva, permitindo simulações e otimizações da política de manutenção para diferentes contextos, auxiliando gestores e engenheiros na definição de estratégias eficientes para a gestão de ativos críticos.'''
-        
-        texto2 = '''Este protótipo possui restrições quanto ao espaço de busca de soluções, com W,M ∈ {1,...,50}. Se for do interesse do usuário utilizar uma gama maior de combinações de soluções ou se houver alguma dúvida sobre o estudo e/ou este protótipo, elas podem ser direcionadas para qualquer um dos endereços de e-mail abaixo. Por fim, se esta aplicação for utilizada para qualquer propósito, todos os autores devem ser informados.'''
+        texto1 = '''Este produto tecnológico, desenvolvido por (Melo; Cavalcante, 2025), para apoiar a tomada de decisão na manutenção de sistemas críticos, como geração e distribuição de energia, abastecimento de água e saneamento básico, especialmente aqueles localizados em áreas remotas ou com infraestrutura complexa. Esses sistemas apresentam desafios operacionais significativos, exigindo estratégias de manutenção que conciliem eficácia e viabilidade operacional. A solução proposta baseia-se em um modelo de manutenção estruturado em períodos discretos, permitindo a integração de ações preventivas e corretivas conforme a disponibilidade de recursos, caracterizada pela ocorrência de oportunidades. Essa abordagem periódica facilita o planejamento estratégico das intervenções e aproxima a teoria da realidade prática dos sistemas industriais. A otimização da política de manutenção é realizada por algoritmos numéricos que avaliam diferentes cenários de renovação do sistema. O modelo considera fatores como os custos das manutenções corretiva e preventiva, o custo da inatividade após uma falha, o custo para garantir uma ação de manutenção, a probabilidade de surgimento de oportunidades em visitas, os intervalos entre os períodos de visita e a vida útil do sistema. A aplicação numérica do modelo, aliada a uma análise de sensibilidade, demonstra que a abordagem proposta é particularmente eficaz em cenários com recursos limitados e poucas oportunidades de manutenção. Além disso, a comparação com políticas de manutenção contínuas evidencia que a discretização dos períodos não compromete significativamente o desempenho do sistema, reforçando a viabilidade prática da metodologia. Esse produto tecnológico oferece uma ferramenta de suporte à decisão acessível e intuitiva, permitindo simulações e otimizações da política de manutenção para diferentes contextos, auxiliando gestores e engenheiros na definição de estratégias eficientes para a gestão de ativos críticos.'''
+        texto2 = '''Este produto tecnológico possui restrições quanto ao espaço de busca de soluções, com W,M ∈ {1,...,50}. Se for do interesse do usuário utilizar uma gama maior de combinações de soluções ou se houver alguma dúvida sobre o estudo e/ou este protótipo, elas podem ser direcionadas para qualquer um dos endereços de e-mail abaixo. Por fim, se esta aplicação for utilizada para qualquer propósito, todos os autores devem ser informados.'''
         st.markdown(f'<p class="justificado">{texto1}</p>', unsafe_allow_html=True)
         st.markdown(f'<p class="justificado">{texto2}</p>', unsafe_allow_html=True)
         st.write('''y.r.melo@random.org.br''')
         st.write('''c.a.v.cavalcante@random.org.br''')
+        st.markdown(
+            """
+            <p style="text-align: justify;">
+                <b>MELO, Yan Ribeiro.</b> 
+                <i>Proposição de Modelo de Manutenção para Sistemas de Difícil Acesso.</i> 
+                2025. 84 f. Dissertação (Mestrado em Engenharia de Produção) – Universidade Federal de Pernambuco, Recife, 2025.
+            </p>
+            """,
+            unsafe_allow_html=True
+        )
 
     if choice == menu[3]:
         
