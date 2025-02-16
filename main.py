@@ -31,7 +31,7 @@ def main():
     
     st.title('Modelo de Manutenção para Sistemas de Difícil Acesso')
 
-    menu = ["Aplicação Analítica", "Aplicação Otimizadora", "Informações", "Grupo de Pesquisa"]
+    menu = ["Simulador", "Otimizador", "Informações", "Grupo de Pesquisa"]
     
     choice = st.sidebar.selectbox("Selecione aqui", menu)
     
